@@ -1,0 +1,118 @@
+package org.rena.sele.autom.practice;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class AutomationPractise_2 {
+
+	public static void main(String[] args) throws Throwable {
+
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\DEEPAK PRABHU\\eclipse-workspace\\AutomationPractice\\Driver\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+
+		driver.manage().window().maximize();
+
+		driver.get("http://automationpractice.com/index.php?controller=authentication&back=my-account");
+
+		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("miniseleproj@gmail.com");
+
+		driver.findElement(By.xpath("//input[@id='passwd']")).sendKeys("qwerty@123");
+
+		driver.findElement(By.xpath("//button[@name='SubmitLogin']")).click();
+
+		driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
+
+		WebElement Women = driver.findElement(By.xpath("//a[text()='Women']"));
+
+		Actions s = new Actions(driver);
+
+		s.moveToElement(Women).perform();
+
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
+		driver.findElement(By.xpath("(//a[text()='Evening Dresses'])[1]")).click();
+
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
+		driver.findElement(By.xpath("//img[@title='Printed Dress']")).click();
+
+		WebDriverWait wait= new WebDriverWait(driver,10);
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//iframe[@class='fancybox-iframe']")));
+
+		System.out.println("Successfull");
+
+		WebElement fe = driver.findElement(By.xpath("//iframe[@class='fancybox-iframe']"));
+
+		driver.switchTo().frame(fe);
+
+		for (int i = 0; i <=5; i++)
+		{
+			driver.findElement(By.xpath("//i[@class='icon-plus']")).click();
+		}
+
+		WebElement findElement = driver.findElement(By.xpath("//select[@id='group_1']"));
+
+		Select s1 = new Select(findElement);
+
+		s1.selectByValue("2");
+
+		driver.findElement(By.xpath("//button[@name='Submit']")).click();
+
+		TakesScreenshot t = (TakesScreenshot) driver;
+
+		File sc = t.getScreenshotAs(OutputType.FILE);
+
+		File de= new File("C:\\Users\\DEEPAK PRABHU\\eclipse-workspace\\AutomationPractice\\Screenshot\\p1.png");
+
+		FileUtils.copyFile(sc, de);
+		
+		driver.switchTo().defaultContent();
+		
+		driver.findElement(By.xpath("//a[@title='Proceed to checkout']")).click();
+		
+		driver.findElement(By.xpath("//span[text()='Proceed to checkout']")).click();
+		
+		//address
+		driver.findElement(By.xpath("//textarea[@class='form-control']")).sendKeys("Please sent the address to the adddress mentioned");
+		
+		driver.findElement(By.xpath("//span[text()='Proceed to checkout']")).click();
+		
+		driver.findElement(By.xpath("//input[@type='checkbox']")).click();
+		
+		driver.findElement(By.xpath("//button[@name='processCarrier']")).click();
+		
+		File sc1 = t.getScreenshotAs(OutputType.FILE);
+
+		File de2= new File("C:\\Users\\DEEPAK PRABHU\\eclipse-workspace\\AutomationPractice\\Screenshot\\p2.png");
+		
+		FileUtils.copyFile(sc1, de2);
+		
+		driver.findElement(By.xpath("//a[@class='bankwire']")).click();
+		
+		driver.findElement(By.xpath("//span[text()='I confirm my order']")).click();
+		
+		File sc2 = t.getScreenshotAs(OutputType.FILE);
+		
+		File de3= new File("C:\\Users\\DEEPAK PRABHU\\eclipse-workspace\\AutomationPractice\\Screenshot\\p3.png");
+		
+		FileUtils.copyFile(sc2, de3);
+	}
+}
+
+
+
+
+
